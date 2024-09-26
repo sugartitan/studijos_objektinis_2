@@ -12,6 +12,13 @@ struct Student {
     int egzam_grade;
 };
 
+bool CompareStudents(Student s1, Student s2) {
+    if (s1.name == s2.name){
+        return s1.last_name < s2.last_name;
+    }
+    return s1.name < s2.name;
+}
+
 int CountWords(std::string str) {
     int count = 0;
     std::stringstream ss(str);
@@ -76,6 +83,8 @@ void ReadDataFromConsole(std::vector<Student>& students) {
             break;
         }
     }
+
+    std::sort(students.begin(), students.end(), CompareStudents);
 }
 
 void ReadDataFromFile(std::vector<Student>& students, std::string filePath) {
@@ -100,6 +109,8 @@ void ReadDataFromFile(std::vector<Student>& students, std::string filePath) {
             students.push_back(student);
         }
     }
+
+    std::sort(students.begin(), students.end(), CompareStudents);
 }
 
 double Mean(std::vector<int> grades) {
