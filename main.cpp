@@ -20,12 +20,40 @@ int CountWords(std::string str) {
     return count;
 }
 
-void ReadData(Student &student) {
-    std::string name, last_name;
-    std::cout << "Enter student's" << std::endl << "Name:";
-    std::cin >> name;
-    std::cout << "Last name:";
-    std::cin >> last_name;
+void ReadDataFromConsole(std::vector<Student>& students) {
+    std::string name, last_name, str;
+    int index = 1, grade, egzam_grade;
+    char add_another;
+
+    while (true) {
+        Student s;
+        std::cout << "Enter student's Name: ";
+        std::cin >> s.name;
+        std::cout << "Last name: ";
+        std::cin >> s.last_name;
+
+        std::cout << "Enter as many student's homework grades as you like. Press ENTER twice to finish." << std::endl;
+
+        std::cin.ignore();
+
+        while (getline(std::cin, str) and !str.empty()) {
+            std::stringstream ss(str);
+            while (ss >> grade)
+                s.grades.push_back(grade);
+        }
+
+        std::cout << "Enter student's egzam grade: ";
+        std::cin >> s.egzam_grade;
+
+        students.push_back(s);
+
+        std::cout << "\nDo you wish to add another student? (y/n): ";
+        std::cin >> add_another;
+
+        if (add_another == 'n') {
+            break;
+        }
+    }
 }
 
 void ReadDataFromFile(std::vector<Student>& students, std::string filePath) {
@@ -102,11 +130,46 @@ void PrintStudentsResults(std::vector<Student> students, bool if_mean) {
 
 int main() {
     std::vector<Student> students;
-    std::string file_path;
+    std::string file_path, mean_or_median;
+    char read_data;
 
-    ReadDataFromFile(students, file_path);
+    while (true) {
+        std::cout << "Read data from (enter 'c' for console or 'f' for file): ";
+        std::cin >> read_data;
 
-    PrintStudentsResults(students, true);
+        if (read_data != 'c' && read_data != 'f') {
+            std::cout << "Invalid input" << std::endl;
+        } 
+        else {
+            break;
+        }
+    }
+
+    if (read_data == 'c') {
+        ReadDataFromConsole(students);
+    }
+    else {
+        std::cout << "Please enter file path: ";
+        std::cin >> file_path;
+        ReadDataFromFile(students, file_path);
+    }
+
+    while(true) {
+        std::cout << "Please choose MEAN or MEDIAN for calculation of the final grade ('mean' for MEAN and 'median' for MEDIAN): ";
+        std::cin >> mean_or_median;
+
+        if (mean_or_median == "mean") {
+            PrintStudentsResults(students, true);
+            break;
+        }
+        else if (mean_or_median == "median") {
+            PrintStudentsResults(students, false);
+            break;
+        }
+        else {
+            std::cout << "Invalid input '" << mean_or_median << "'" << std::endl;
+        }
+    }
 
     return 0;
 }
