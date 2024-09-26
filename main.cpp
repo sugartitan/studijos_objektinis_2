@@ -31,7 +31,21 @@ void GenerateRandomGrades(Student& s, int n) {
         s.grades.push_back(GetRandomGrade());
     }
 
-    s.egzam_grade = GetRandomGrade();
+    s.exam_grade = GetRandomGrade();
+}
+
+void ReadInt(int& n, std::string header) {
+    std::cout << header;
+    std::cin >> n;
+
+    while (std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                '\n');
+        std::cout << "Input is not an integer" << std::endl;
+        std::cout << header;
+        std::cin >> n;
+    }
 }
 
 double Mean(std::vector<int> grades) {
@@ -55,7 +69,7 @@ double Median(std::vector<int> grades) {
 
 void ReadDataFromConsole(std::vector<Student>& students) {
     std::string name, last_name, str;
-    int index = 1, grade, egzam_grade, n_grades;
+    int index = 1, grade, exam_grade, n_grades;
     char add_another, at_random;
 
     while (true) {
@@ -79,12 +93,10 @@ void ReadDataFromConsole(std::vector<Student>& students) {
                     s.grades.push_back(grade);
             }
 
-            std::cout << "Enter student's egzam grade: ";
-            std::cin >> s.egzam_grade;
+            ReadInt(s.exam_grade, "Enter student's egzam grade: ");
         }
         else {
-            std::cout << "Enter a number of homework grades to generate: ";
-            std::cin >> n_grades;
+            ReadInt(n_grades, "Enter a number of homework grades to generate: ");
             GenerateRandomGrades(s, n_grades);
         }
 
@@ -118,7 +130,7 @@ void ReadDataFromFile(std::vector<Student>& students, std::string filePath) {
                 ss >> grade;
                 student.grades.push_back(grade);
             }
-            ss >> student.egzam_grade;
+            ss >> student.exam_grade;
 
             students.push_back(student);
         }
