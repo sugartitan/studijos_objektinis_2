@@ -5,12 +5,7 @@
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
-
-struct Student {
-    std::string name, last_name;
-    std::vector<int> grades;
-    int egzam_grade;
-};
+#include <Student.h>
 
 bool CompareStudents(Student s1, Student s2) {
     if (s1.name == s2.name){
