@@ -31,4 +31,6 @@
 *.out
 *.app
 
-.vscode
+main
+.vscode/
+test_data/
