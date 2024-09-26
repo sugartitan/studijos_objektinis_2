@@ -20,10 +20,22 @@ int CountWords(std::string str) {
     return count;
 }
 
+int GetRandomGrade() {
+    return std::rand() % 10 + 1;
+}
+
+void GenerateRandomGrades(Student& s, int n) {
+    for (int i = 0; i < n; i++) {
+        s.grades.push_back(GetRandomGrade());
+    }
+
+    s.egzam_grade = GetRandomGrade();
+}
+
 void ReadDataFromConsole(std::vector<Student>& students) {
     std::string name, last_name, str;
-    int index = 1, grade, egzam_grade;
-    char add_another;
+    int index = 1, grade, egzam_grade, n_grades;
+    char add_another, at_random;
 
     while (true) {
         Student s;
@@ -32,18 +44,28 @@ void ReadDataFromConsole(std::vector<Student>& students) {
         std::cout << "Last name: ";
         std::cin >> s.last_name;
 
-        std::cout << "Enter as many student's homework grades as you like. Press ENTER twice to finish." << std::endl;
+        std::cout << "\nDo you want to generate student's grades at random? (y/n): ";
+        std::cin >> at_random;
 
-        std::cin.ignore();
+        if (at_random == 'n') {
+            std::cout << "Enter as many student's homework grades as you like. Press ENTER twice to finish." << std::endl;
 
-        while (getline(std::cin, str) and !str.empty()) {
-            std::stringstream ss(str);
-            while (ss >> grade)
-                s.grades.push_back(grade);
+            std::cin.ignore();
+
+            while (getline(std::cin, str) and !str.empty()) {
+                std::stringstream ss(str);
+                while (ss >> grade)
+                    s.grades.push_back(grade);
+            }
+
+            std::cout << "Enter student's egzam grade: ";
+            std::cin >> s.egzam_grade;
         }
-
-        std::cout << "Enter student's egzam grade: ";
-        std::cin >> s.egzam_grade;
+        else {
+            std::cout << "Enter a number of homework grades to generate: ";
+            std::cin >> n_grades;
+            GenerateRandomGrades(s, n_grades);
+        }
 
         students.push_back(s);
 
