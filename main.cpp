@@ -5,7 +5,7 @@
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
-#include <Student.h>
+#include "Student.h"
 
 bool CompareStudents(Student s1, Student s2) {
     if (s1.name == s2.name){
