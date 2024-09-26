@@ -5,12 +5,14 @@
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
+#include "Student.h"
 
-struct Student {
-    std::string name, last_name;
-    std::vector<int> grades;
-    int egzam_grade;
-};
+bool CompareStudents(Student s1, Student s2) {
+    if (s1.name == s2.name){
+        return s1.last_name < s2.last_name;
+    }
+    return s1.name < s2.name;
+}
 
 int CountWords(std::string str) {
     int count = 0;
@@ -29,12 +31,45 @@ void GenerateRandomGrades(Student& s, int n) {
         s.grades.push_back(GetRandomGrade());
     }
 
-    s.egzam_grade = GetRandomGrade();
+    s.exam_grade = GetRandomGrade();
+}
+
+void ReadInt(int& n, std::string header) {
+    std::cout << header;
+    std::cin >> n;
+
+    while (std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                '\n');
+        std::cout << "Input is not an integer" << std::endl;
+        std::cout << header;
+        std::cin >> n;
+    }
+}
+
+double Mean(std::vector<int> grades) {
+    double sum = 0;
+    for (int grade : grades) {
+        sum += grade;
+    }
+
+    return sum / grades.size();
+}
+
+double Median(std::vector<int> grades) {
+    std::vector<int> v_sorted(grades.size());
+    std::partial_sort_copy(begin(grades), end(grades), begin(v_sorted), end(v_sorted));
+
+    if (v_sorted.size() % 2 == 0) {
+        return (v_sorted[v_sorted.size() / 2] + v_sorted[v_sorted.size() / 2 - 1]) / 2;
+    }
+    return v_sorted[v_sorted.size() / 2];
 }
 
 void ReadDataFromConsole(std::vector<Student>& students) {
     std::string name, last_name, str;
-    int index = 1, grade, egzam_grade, n_grades;
+    int index = 1, grade, exam_grade, n_grades;
     char add_another, at_random;
 
     while (true) {
@@ -58,12 +93,10 @@ void ReadDataFromConsole(std::vector<Student>& students) {
                     s.grades.push_back(grade);
             }
 
-            std::cout << "Enter student's egzam grade: ";
-            std::cin >> s.egzam_grade;
+            ReadInt(s.exam_grade, "Enter student's egzam grade: ");
         }
         else {
-            std::cout << "Enter a number of homework grades to generate: ";
-            std::cin >> n_grades;
+            ReadInt(n_grades, "Enter a number of homework grades to generate: ");
             GenerateRandomGrades(s, n_grades);
         }
 
@@ -76,6 +109,8 @@ void ReadDataFromConsole(std::vector<Student>& students) {
             break;
         }
     }
+
+    std::sort(students.begin(), students.end(), CompareStudents);
 }
 
 void ReadDataFromFile(std::vector<Student>& students, std::string filePath) {
@@ -95,34 +130,17 @@ void ReadDataFromFile(std::vector<Student>& students, std::string filePath) {
                 ss >> grade;
                 student.grades.push_back(grade);
             }
-            ss >> student.egzam_grade;
+            ss >> student.exam_grade;
 
             students.push_back(student);
         }
     }
-}
 
-double Mean(std::vector<int> grades) {
-    double sum = 0;
-    for (int grade : grades) {
-        sum += grade;
-    }
-
-    return sum / grades.size();
-}
-
-double Median(std::vector<int> grades) {
-    std::vector<int> v_sorted(grades.size());
-    std::partial_sort_copy(begin(grades), end(grades), begin(v_sorted), end(v_sorted));
-
-    if (v_sorted.size() % 2 == 0) {
-        return (v_sorted[v_sorted.size() / 2] + v_sorted[v_sorted.size() / 2 - 1]) / 2;
-    }
-    return v_sorted[v_sorted.size() / 2];
+    std::sort(students.begin(), students.end(), CompareStudents);
 }
 
 void PrintStudentsResults(std::vector<Student> students, bool if_mean) {
-    double sum = 0, value;
+    double value;
     std::string func_str = "Final grade ";
 
     if (if_mean) { 
@@ -145,8 +163,18 @@ void PrintStudentsResults(std::vector<Student> students, bool if_mean) {
             value = Median(s.grades);
         }
 
-        std::cout << std::right << std::setw(20) << std::fixed << std::setprecision(2) << value << std::endl;
-        sum = 0;
+        std::cout << std::fixed << std::setprecision(2) << std::right << std::setw(20) << value << std::endl;
+    }
+}
+
+void PrintStudentsResultsFromFile(std::vector<Student> students) {
+    std::cout << std::left << std::setw(20) << "Name" << std::setw(20) << "Last name" << std::right << std::setw(20) << "Final grade (mean)" << std::setw(25) << "Final grade (median)" << std::endl;
+    std::cout << std::string(85, '-') << std::endl;
+
+    for (Student s : students) {
+        std::cout << std::left << std::setw(20) << s.name << std::setw(20) << s.last_name;
+
+        std::cout << std::fixed << std::setprecision(2) << std::right << std::setw(20) << Mean(s.grades) << std::setw(25) << Median(s.grades) << std::endl;
     }
 }
 
@@ -169,28 +197,29 @@ int main() {
 
     if (read_data == 'c') {
         ReadDataFromConsole(students);
+
+        while(true) {
+            std::cout << "Please choose MEAN or MEDIAN for calculation of the final grade ('mean' for MEAN and 'median' for MEDIAN): ";
+            std::cin >> mean_or_median;
+
+            if (mean_or_median == "mean") {
+                PrintStudentsResults(students, true);
+                break;
+            }
+            else if (mean_or_median == "median") {
+                PrintStudentsResults(students, false);
+                break;
+            }
+            else {
+                std::cout << "Invalid input '" << mean_or_median << "'" << std::endl;
+            }
+        }
     }
     else {
         std::cout << "Please enter file path: ";
         std::cin >> file_path;
         ReadDataFromFile(students, file_path);
-    }
-
-    while(true) {
-        std::cout << "Please choose MEAN or MEDIAN for calculation of the final grade ('mean' for MEAN and 'median' for MEDIAN): ";
-        std::cin >> mean_or_median;
-
-        if (mean_or_median == "mean") {
-            PrintStudentsResults(students, true);
-            break;
-        }
-        else if (mean_or_median == "median") {
-            PrintStudentsResults(students, false);
-            break;
-        }
-        else {
-            std::cout << "Invalid input '" << mean_or_median << "'" << std::endl;
-        }
+        PrintStudentsResultsFromFile(students);
     }
 
     return 0;
