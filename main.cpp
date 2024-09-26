@@ -34,6 +34,25 @@ void GenerateRandomGrades(Student& s, int n) {
     s.egzam_grade = GetRandomGrade();
 }
 
+double Mean(std::vector<int> grades) {
+    double sum = 0;
+    for (int grade : grades) {
+        sum += grade;
+    }
+
+    return sum / grades.size();
+}
+
+double Median(std::vector<int> grades) {
+    std::vector<int> v_sorted(grades.size());
+    std::partial_sort_copy(begin(grades), end(grades), begin(v_sorted), end(v_sorted));
+
+    if (v_sorted.size() % 2 == 0) {
+        return (v_sorted[v_sorted.size() / 2] + v_sorted[v_sorted.size() / 2 - 1]) / 2;
+    }
+    return v_sorted[v_sorted.size() / 2];
+}
+
 void ReadDataFromConsole(std::vector<Student>& students) {
     std::string name, last_name, str;
     int index = 1, grade, egzam_grade, n_grades;
@@ -106,25 +125,6 @@ void ReadDataFromFile(std::vector<Student>& students, std::string filePath) {
     }
 
     std::sort(students.begin(), students.end(), CompareStudents);
-}
-
-double Mean(std::vector<int> grades) {
-    double sum = 0;
-    for (int grade : grades) {
-        sum += grade;
-    }
-
-    return sum / grades.size();
-}
-
-double Median(std::vector<int> grades) {
-    std::vector<int> v_sorted(grades.size());
-    std::partial_sort_copy(begin(grades), end(grades), begin(v_sorted), end(v_sorted));
-
-    if (v_sorted.size() % 2 == 0) {
-        return (v_sorted[v_sorted.size() / 2] + v_sorted[v_sorted.size() / 2 - 1]) / 2;
-    }
-    return v_sorted[v_sorted.size() / 2];
 }
 
 void PrintStudentsResults(std::vector<Student> students, bool if_mean) {
