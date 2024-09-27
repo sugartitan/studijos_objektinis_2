@@ -117,6 +117,10 @@ void ReadDataFromFile(std::vector<Student>& students, std::string filePath) {
     std::ifstream file(filePath);
     std::string my_string, token;
     int pos = 0, grade;
+
+    if (!file) {
+        throw("File does not exist");
+    }
     
     if (file.is_open()) {
         getline(file, my_string);
@@ -136,51 +140,53 @@ void ReadDataFromFile(std::vector<Student>& students, std::string filePath) {
         }
     }
 
+    file.close();
+
     std::sort(students.begin(), students.end(), CompareStudents);
 }
 
-void PrintStudentsResults(std::vector<Student> students, bool if_mean) {
-    double value;
-    std::string func_str = "Final grade ";
-
-    if (if_mean) { 
-        func_str += "(mean)";
-    }
-    else {
-        func_str += "(median)";
-    }
-
-    std::cout << std::left << std::setw(20) << "Name" << std::setw(20) << "Last name" << std::right << std::setw(20) << func_str << std::endl;
-    std::cout << std::string(60, '-') << std::endl;
-
-    for (Student s : students) {
-        std::cout << std::left << std::setw(20) << s.name << std::setw(20) << s.last_name;
-
-        if (if_mean) {
-            value = Mean(s.grades);
-        }
-        else {
-            value = Median(s.grades);
-        }
-
-        std::cout << std::fixed << std::setprecision(2) << std::right << std::setw(20) << value << std::endl;
-    }
+std::string ConvertDoubleToString(double d) {
+    std::ostringstream oss;
+    oss.precision(2);
+    oss << std::fixed << d;
+    return oss.str();
 }
 
-void PrintStudentsResultsFromFile(std::vector<Student> students) {
-    std::cout << std::left << std::setw(20) << "Name" << std::setw(20) << "Last name" << std::right << std::setw(20) << "Final grade (mean)" << std::setw(25) << "Final grade (median)" << std::endl;
-    std::cout << std::string(85, '-') << std::endl;
+std::string PadTo(std::string str, size_t num, bool pad_right = false, char paddingChar = ' ')
+{
+    std::string str_copy = str;
+    if(num > str.size())
+        if (pad_right) {
+            str_copy.insert(0, num - str.size(), paddingChar);
+        }
+        else {
+            str_copy.insert(str.size(), num - str.size(), paddingChar);
+        }
 
+    return str_copy;
+}
+
+std::string MakeSingleLine(std::vector<Student> students) {
+    double mean, median;
+    std::string line = PadTo("Name", 20) + PadTo("Last name", 20) + PadTo("Final grade (mean)", 20, true) + PadTo("Final grade (median)", 25, true);
+    line += '\n' + std::string(85, '-') + '\n';
     for (Student s : students) {
-        std::cout << std::left << std::setw(20) << s.name << std::setw(20) << s.last_name;
-
-        std::cout << std::fixed << std::setprecision(2) << std::right << std::setw(20) << Mean(s.grades) << std::setw(25) << Median(s.grades) << std::endl;
+        mean = Mean(s.grades);
+        median = Median(s.grades);
+        line += PadTo(s.name, 20) + PadTo(s.last_name, 20) + PadTo(ConvertDoubleToString(mean), 20, true) + PadTo(ConvertDoubleToString(median), 25, true) + '\n';
     }
+    return line;
+}
+
+void WriteStudentsResultsToFile(std::vector<Student> students, std::string file_path) {
+    std::ofstream file(file_path);
+    file << MakeSingleLine(students);
+    file.close();
 }
 
 int main() {
     std::vector<Student> students;
-    std::string file_path, mean_or_median;
+    std::string file_path, output_file_path, mean_or_median;
     char read_data;
 
     while (true) {
@@ -197,30 +203,22 @@ int main() {
 
     if (read_data == 'c') {
         ReadDataFromConsole(students);
-
-        while(true) {
-            std::cout << "Please choose MEAN or MEDIAN for calculation of the final grade ('mean' for MEAN and 'median' for MEDIAN): ";
-            std::cin >> mean_or_median;
-
-            if (mean_or_median == "mean") {
-                PrintStudentsResults(students, true);
-                break;
-            }
-            else if (mean_or_median == "median") {
-                PrintStudentsResults(students, false);
-                break;
-            }
-            else {
-                std::cout << "Invalid input '" << mean_or_median << "'" << std::endl;
-            }
-        }
     }
     else {
         std::cout << "Please enter file path: ";
         std::cin >> file_path;
-        ReadDataFromFile(students, file_path);
-        PrintStudentsResultsFromFile(students);
+        try {
+            ReadDataFromFile(students, file_path);  
+        }
+        catch (std::string e){
+            std::cout << e << std::endl;
+        }
     }
+
+    std::cout << "Please enter output file path: ";
+    std::cin >> output_file_path;
+
+    WriteStudentsResultsToFile(students, output_file_path);
 
     return 0;
 }

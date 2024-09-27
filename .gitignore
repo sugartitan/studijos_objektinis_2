@@ -34,3 +34,4 @@
 main
 .vscode/
 test_data/
+output.txt
