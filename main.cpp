@@ -5,7 +5,9 @@
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
+#include <tuple>
 #include "Student.h"
+#include "Exceptions.h"
 
 bool CompareStudents(Student s1, Student s2) {
     if (s1.name == s2.name){
@@ -119,7 +121,7 @@ void ReadDataFromFile(std::vector<Student>& students, std::string filePath) {
     int pos = 0, grade;
 
     if (!file) {
-        throw("File does not exist");
+        throw FileNotFound();
     }
     
     if (file.is_open()) {
@@ -166,6 +168,17 @@ std::string PadTo(std::string str, size_t num, bool pad_right = false, char padd
     return str_copy;
 }
 
+std::tuple<std::vector<Student>, std::vector<Student>> SplitStudents(std::vector<Student> students) {
+    std::vector<Student> poor, smart;
+
+    for (Student s : students) {
+        if (Mean(s.grades) < 5) poor.push_back(s);
+        else smart.push_back(s);
+    }
+
+    return std::make_tuple(poor, smart);
+}
+
 std::string MakeSingleLine(std::vector<Student> students) {
     double mean, median;
     std::string line = PadTo("Name", 20) + PadTo("Last name", 20) + PadTo("Final grade (mean)", 20, true) + PadTo("Final grade (median)", 25, true);
@@ -185,8 +198,8 @@ void WriteStudentsResultsToFile(std::vector<Student> students, std::string file_
 }
 
 int main() {
-    std::vector<Student> students;
-    std::string file_path, output_file_path, mean_or_median;
+    std::vector<Student> students, poor_students, smart_students;
+    std::string file_path, poor_output_file_path, smart_output_file_path;
     char read_data;
 
     while (true) {
@@ -210,15 +223,22 @@ int main() {
         try {
             ReadDataFromFile(students, file_path);  
         }
-        catch (std::string e){
-            std::cout << e << std::endl;
+        catch (std::exception& e){
+            std::cout << "Error: " << e.what() << std::endl;
+            return 0;
         }
     }
 
-    std::cout << "Please enter output file path: ";
-    std::cin >> output_file_path;
+    std::cout << "Please enter output file path for 'poor' students: ";
+    std::cin >> poor_output_file_path;
 
-    WriteStudentsResultsToFile(students, output_file_path);
+    std::cout << "Please enter output file path for 'smart' students: ";
+    std::cin >> smart_output_file_path;
+
+    tie(poor_students, smart_students) = SplitStudents(students);
+
+    WriteStudentsResultsToFile(poor_students, poor_output_file_path);
+    WriteStudentsResultsToFile(smart_students, smart_output_file_path);
 
     return 0;
 }
