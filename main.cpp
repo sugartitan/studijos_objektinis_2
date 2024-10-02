@@ -32,8 +32,6 @@ void GenerateRandomGrades(Student& s, int n) {
     for (int i = 0; i < n; i++) {
         s.grades.push_back(GetRandomGrade());
     }
-
-    s.exam_grade = GetRandomGrade();
 }
 
 void ReadInt(int& n, std::string header) {
