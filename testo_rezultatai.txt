@@ -1,0 +1,38 @@
+1000 studentu duomenu nuskaitymas is failo uztruko: 0.003700 s
+1000 studentu duomenu surusiavimas didejant naudojant sort: 0.005128 s
+1000 studentu duomenu dalijimas i dvi grupes uztruko: 0.001343 s
+1000 vargsiuku studentu surasymas i faila uztruko: 0.001422 s
+1000 kietuoliu studentu surasymas i faila uztruko: 0.004794 s
+1000 studentu testas truko: 0.016466 s
+
+
+10000 studentu duomenu nuskaitymas is failo uztruko: 0.029717 s
+10000 studentu duomenu surusiavimas didejant naudojant sort: 0.091006 s
+10000 studentu duomenu dalijimas i dvi grupes uztruko: 0.015087 s
+10000 vargsiuku studentu surasymas i faila uztruko: 0.015473 s
+10000 kietuoliu studentu surasymas i faila uztruko: 0.050078 s
+10000 studentu testas truko: 0.201452 s
+
+
+100000 studentu duomenu nuskaitymas is failo uztruko: 0.291536 s
+100000 studentu duomenu surusiavimas didejant naudojant sort: 1.434153 s
+100000 studentu duomenu dalijimas i dvi grupes uztruko: 0.137203 s
+100000 vargsiuku studentu surasymas i faila uztruko: 0.152981 s
+100000 kietuoliu studentu surasymas i faila uztruko: 0.501459 s
+100000 studentu testas truko: 2.517472 s
+
+
+1000000 studentu duomenu nuskaitymas is failo uztruko: 2.846270 s
+1000000 studentu duomenu surusiavimas didejant naudojant sort: 16.785904 s
+1000000 studentu duomenu dalijimas i dvi grupes uztruko: 1.353028 s
+1000000 vargsiuku studentu surasymas i faila uztruko: 1.502373 s
+1000000 kietuoliu studentu surasymas i faila uztruko: 5.077022 s
+1000000 studentu testas truko: 27.564747 s
+
+
+10000000 studentu duomenu nuskaitymas is failo uztruko: 26.448749 s
+10000000 studentu duomenu surusiavimas didejant naudojant sort: 215.130708 s
+10000000 studentu duomenu dalijimas i dvi grupes uztruko: 14.783381 s
+10000000 vargsiuku studentu surasymas i faila uztruko: 15.275692 s
+10000000 kietuoliu studentu surasymas i faila uztruko: 50.668130 s
+10000000 studentu testas truko: 322.306828 s
