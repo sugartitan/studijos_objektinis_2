@@ -5,7 +5,8 @@
 #include <cmath>
 #include <iomanip>
 #include "Student.h"
-#include "Helper.h"
+#include "helper.h"
+#include "generate_data.h"
 
 int GenerateRandomGrade() {
     return std::rand() % 10 + 1;
@@ -14,7 +15,7 @@ int GenerateRandomGrade() {
 std::vector<int> GenerateRandomGrades(int n) {
     std::vector<int> grades;
     for (int i = 0; i < n; i++) {
-        grades.push_back(GenerateRandomGrade());
+        grades.push_back(GetRandomGrade());
     }
 
     return grades;
@@ -25,7 +26,7 @@ Student GenerateStudent(int n, int n_grades) {
     s.name = "Vardas" + std::to_string(n);
     s.last_name = "Pavarde" + std::to_string(n);
     s.grades = GenerateRandomGrades(n_grades);
-    s.exam_grade = GenerateRandomGrade();
+    s.exam_grade = GetRandomGrade();
     return s;
 }
 
@@ -63,10 +64,10 @@ std::string CreateSingleLine(std::vector<Student> students) {
     return line;
 }
 
-int main() {
+void GenerateData() {
     std::vector<Student> studentai;
     std::ofstream file;
-    std::string single_line;
+    std::string single_line, path = "generated_data";
     int n, n_grades = 15;
     auto start = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff;
@@ -92,6 +93,4 @@ int main() {
 
         file.close();
     }
-
-    return 0;
 }
