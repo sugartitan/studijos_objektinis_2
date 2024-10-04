@@ -8,10 +8,6 @@
 #include "helper.h"
 #include "generate_data.h"
 
-int GenerateRandomGrade() {
-    return std::rand() % 10 + 1;
-}
-
 std::vector<int> GenerateRandomGrades(int n) {
     std::vector<int> grades;
     for (int i = 0; i < n; i++) {
