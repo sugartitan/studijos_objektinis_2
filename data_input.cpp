@@ -130,5 +130,8 @@ void DataInput() {
     WriteStudentsResultsToFile(poor_students, poor_output_file_path);
     WriteStudentsResultsToFile(smart_students, smart_output_file_path);
 
+    std::cout << "Poor students results save in '" << poor_output_file_path << "'\n";
+    std::cout << "Smart students results save in '" << smart_output_file_path << "'\n";
+
     return;
 }
