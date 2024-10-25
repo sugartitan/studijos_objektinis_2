@@ -29,5 +29,7 @@ int main() {
             default:
                 std::cout << "Choice does not exist.";
         }
+
+        std::cout << "\n\n";
     }
 }
