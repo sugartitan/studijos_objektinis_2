@@ -22,7 +22,6 @@ template <typename T> std::vector<std::vector<double>> TestSpeed(T &students, bo
     std::chrono::duration<double> diff;
 
     for (int i = 3; i <= 7; i++) {
-        line.push_back(i - 3);
         n = std::pow(10, i);
         file_path = "generated_data/studentai" + std::to_string(n) + ".txt";
 

@@ -70,7 +70,6 @@ template <typename T> std::vector<std::vector<double>> GenerateData(T &students)
     std::chrono::duration<double> diff;
 
     for (int i = 3; i <= 7; i++) {
-        line.push_back(i - 3);
         n = std::pow(10, i);
         file.open("generated_data/students" + std::to_string(n) + ".txt");
 
