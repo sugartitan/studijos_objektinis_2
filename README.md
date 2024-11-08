@@ -2,25 +2,90 @@
 
 A program to ease the input of students grades through console or reading from a file.
 
-# V1.0
+# V0.1
+
+Created functionality:
+* Student data structure to save Student's name, last name, grades and exam grade;
+* Input data by hand;
+* Calculating final score by Median or Mean;
+* Sorting by Students names, last names and final grades;
+* Ability to generate random Student grades.
+
+# V0.1.1
+
+Improved:
+* Data output to file instead of Console.
+
+# V0.2
+
+Added:
+* Data generation to files.
+
+Improved:
+* Reworked structure, made use of interfaces.
+
+# V0.3
+
+Improved:
+* Cleaned code;
+* Did some speed tests.
+
+### Tests:
 
 Test parameters:
 
-**CPU** - 6C/12T 3.7-4.6GHz
-**RAM** - CL16, 4x8GB, DDR4, 3200 MHz
-**SSD** - SPCC M.2 PCIe SSD
+- **CPU** - 6C/12T 3.7-4.6GHz
+- **RAM** - CL16, 4x8GB, DDR4, 3200 MHz
+- **SSD** - SPCC M.2 PCIe SSD
+
+Data Generation times using Vectors:
+![alt text](images/dgv.png)
+
+Data Generation times using Lists:
+![alt text](images/dgl.png)
+
+Data Reading times using Vectors:
+![alt text](images/drv.png)
+
+Data Reading times using Lists:
+![alt text](images/drl.png)
+
+# V1.0
+
+Added:
+* Ability to chose List or Vector in Console;
+* Saving test/generation time data to csv.
+
+Improved:
+* Cleaned code.
+
+Fixed:
+* Mean or Median not including exam grade.
+
+### Tests:
+
+Test parameters:
+
+- **CPU** - 6C/12T 3.7-4.6GHz
+- **RAM** - CL16, 4x8GB, DDR4, 3200 MHz
+- **SSD** - SPCC M.2 PCIe SSD
 
 Data Generation times:
+
 ![alt text](images/data_generation.png)
 
 Data reading and calculation times using List and keeping original container:
+
 ![alt text](images/test_list_keep.png)
 
 Data reading and calculation times using List and splitting into two containers:
+
 ![alt text](images/test_list_split.png)
 
 Data reading and calculation times using Vector and keeping original container:
+
 ![alt text](images/test_vector_keep.png)
 
 Data reading and calculation times using Vector and splitting into two containers:
+
 ![alt text](images/test_vector_split.png)
