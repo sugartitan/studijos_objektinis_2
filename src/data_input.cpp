@@ -9,7 +9,7 @@
 #include "data_input.h"
 #include "Exceptions.h"
 
-void ReadDataFromConsole(std::vector<Student>& students) {
+template <typename T> void ReadDataFromConsole(T &students) {
     std::string name, last_name, str;
     int index = 1, grade, exam_grade, n_grades;
     char add_another, at_random;
@@ -52,10 +52,10 @@ void ReadDataFromConsole(std::vector<Student>& students) {
         }
     }
 
-    std::sort(students.begin(), students.end(), CompareStudents);
+    Sort(students);
 }
 
-void ReadDataFromFile(std::vector<Student>& students, std::string filePath) {
+template <typename T> void ReadDataFromFile(T &students, std::string filePath) {
     std::ifstream file(filePath);
     std::string my_string, token;
     int pos = 0, grade;
@@ -67,6 +67,7 @@ void ReadDataFromFile(std::vector<Student>& students, std::string filePath) {
     if (file.is_open()) {
         getline(file, my_string);
         int count = CountWords(my_string);
+        getline(file, my_string);
 
         while (getline(file, my_string)) {
             std::stringstream ss(my_string);
@@ -85,8 +86,8 @@ void ReadDataFromFile(std::vector<Student>& students, std::string filePath) {
     file.close();
 }
 
-void DataInput() {
-    std::vector<Student> students, poor_students, smart_students;
+template <typename T> void DataInput(T &students, bool split) {
+    T poor_students, smart_students;
     std::string file_path, poor_output_file_path, smart_output_file_path;
     char read_data;
 
@@ -117,7 +118,7 @@ void DataInput() {
         }
     }
 
-    std::sort(students.begin(), students.end(), CompareStudents);
+    Sort(students);
 
     std::cout << "Please enter output file path for 'poor' students: ";
     std::cin >> poor_output_file_path;
@@ -125,13 +126,66 @@ void DataInput() {
     std::cout << "Please enter output file path for 'smart' students: ";
     std::cin >> smart_output_file_path;
 
-    tie(poor_students, smart_students) = SplitStudents(students);
-
+    if (split) {
+        tie(poor_students, smart_students) = SplitStudents(students);
+        WriteStudentsResultsToFile(smart_students, smart_output_file_path);
+    } else {
+        poor_students = SplitStudentsKeep(students);
+        WriteStudentsResultsToFile(students, smart_output_file_path);
+    }
+    
     WriteStudentsResultsToFile(poor_students, poor_output_file_path);
-    WriteStudentsResultsToFile(smart_students, smart_output_file_path);
 
     std::cout << "Poor students results save in '" << poor_output_file_path << "'\n";
     std::cout << "Smart students results save in '" << smart_output_file_path << "'\n";
 
     return;
+}
+
+void DataInput() {
+    char choice1, choice2;
+    bool cont = true;
+    while (cont) {
+        std::cout << "Please choose: \n(l) - list\n(v) - vector" << std::endl; 
+        std::cout << "Enter: ";
+        std::cin >> choice1;
+
+        if (choice1 == 'l') {
+            break;
+        }
+        else if (choice1 == 'v'){
+            break;
+        }
+        else {
+            std::cout << "Choice does not exist.";
+        }
+
+        std::cout << "\n\n";   
+    }
+
+    while (cont) {
+        std::cout << "Please choose: \n(1) - split container\n(2) - use same container" << std::endl; 
+        std::cout << "Enter: ";
+        std::cin >> choice2;
+
+        if (choice2 == '1') {
+            break;
+        }
+        else if (choice2 == '2'){
+            break;
+        }
+        else {
+            std::cout << "Choice does not exist.";
+        }
+
+        std::cout << "\n\n";   
+    }
+
+    if (choice1 == 'l') {
+        std::list<Student> students;
+        DataInput(students, choice2 == '1');
+    } else {
+        std::vector<Student> students;
+        DataInput(students, choice2 == '1');
+    }
 }

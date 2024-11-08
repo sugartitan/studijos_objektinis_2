@@ -7,12 +7,16 @@
 #include <algorithm>
 #include <tuple>
 #include <limits>
+#include <list>
 #include "Student.h"
 #include "Exceptions.h"
 #include "helper.h"
 
 bool CompareStudents(Student s1, Student s2) {
     if (s1.name == s2.name){
+        if (s1.last_name == s2.last_name) {
+            return Mean(s1) < Mean(s2);
+        }
         return s1.last_name < s2.last_name;
     }
     return s1.name < s2.name;
@@ -26,18 +30,19 @@ int CountWords(std::string str) {
     return count;
 }
 
-double Mean(std::vector<int> grades) {
-    double sum = 0;
-    for (int grade : grades) {
+double Mean(Student s) {
+    double sum = s.exam_grade;
+    for (int grade : s.grades) {
         sum += grade;
     }
 
-    return sum / grades.size();
+    return sum / (s.grades.size() + 1);
 }
 
-double Median(std::vector<int> grades) {
-    std::vector<int> v_sorted(grades.size());
-    std::partial_sort_copy(begin(grades), end(grades), begin(v_sorted), end(v_sorted));
+double Median(Student s) {
+    std::vector<int> v_sorted(s.grades);
+    v_sorted.push_back(s.exam_grade);
+    std::sort(v_sorted.begin(), v_sorted.end());;
 
     if (v_sorted.size() % 2 == 0) {
         return (v_sorted[v_sorted.size() / 2] + v_sorted[v_sorted.size() / 2 - 1]) / 2;
@@ -90,31 +95,27 @@ void ReadInt(int& n, std::string header) {
     }
 }
 
-std::tuple<std::vector<Student>, std::vector<Student>> SplitStudents(std::vector<Student> students) {
-    std::vector<Student> poor, smart;
-
-    for (Student s : students) {
-        if (Mean(s.grades) < 5) poor.push_back(s);
-        else smart.push_back(s);
-    }
-
-    return std::make_tuple(poor, smart);
+void Sort(std::vector<Student> &students) {
+    std::sort(students.begin(), students.end(), CompareStudents);
 }
 
-std::string MakeSingleLine(std::vector<Student> students) {
-    double mean, median;
-    std::string line = PadTo("Name", 20) + PadTo("Last name", 20) + PadTo("Final grade (mean)", 20, true) + PadTo("Final grade (median)", 25, true);
-    line += '\n' + std::string(85, '-') + '\n';
-    for (Student s : students) {
-        mean = Mean(s.grades);
-        median = Median(s.grades);
-        line += PadTo(s.name, 20) + PadTo(s.last_name, 20) + PadTo(ConvertDoubleToString(mean), 20, true) + PadTo(ConvertDoubleToString(median), 25, true) + '\n';
-    }
-    return line;
+void Sort(std::list<Student> &students) {
+    students.sort(CompareStudents);
 }
 
-void WriteStudentsResultsToFile(std::vector<Student> students, std::string file_path) {
-    std::ofstream file(file_path);
-    file << MakeSingleLine(students);
+void SaveCsv(std::vector<std::vector<double>> data, std::string file_path) {
+    std::ofstream file;
+    file.open(file_path);
+    std::string text = "";
+
+    for (int i = 0; i < data.size(); i++) {
+        text += std::to_string(i);
+        for (int j = 0; j < data[i].size(); j++) {
+            text += ',' + std::to_string(data[i][j]);
+        }
+        text += '\n';
+    }
+
+    file << text;
     file.close();
 }
