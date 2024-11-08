@@ -2,6 +2,30 @@
 
 A program to ease the input of students grades through console or reading from a file.
 
+# Download
+
+1. Download as ZIP and extract.
+2. Open console and in the extracted folder (where 'CMakeLists.txt' file exists) run:
+
+    `cmake -G "MinGW Makefile" .`
+
+3. Run these commands:
+
+    ```
+    cmake --install .
+    cmake --build .
+    ```
+
+4. Run `Student_Management_System.exe` and Done!
+
+# Usage
+
+This is a Console Program without UI. 
+
+The messeges inside are straightforward.
+
+If you get message `Choice does not exist.` please check for available inputs in the console above.
+
 # V0.1
 
 Created functionality:
