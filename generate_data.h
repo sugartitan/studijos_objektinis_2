@@ -1,16 +1,19 @@
 #ifndef GENERATEDATA_H
 #define GENERATEDATA_H
 #include <vector>
+#include <list>
 #include "Student.h"
 
 std::vector<int> GenerateRandomGrades(int n);
 
 Student GenerateStudent(int n, int n_grades);
 
-std::vector<Student> CreateStudentList(int n, int n_grades);
+template <typename T> void CreateStudentList(T &students, int n, int n_grades);
 
-std::string CreateSingleLine(std::vector<Student> students);
+template <typename T> std::string CreateSingleLine(T students);
 
-void GenerateData();
+template <typename T> void GenerateData(T &students);
+
+void GenerateDataListOrVector();
 
 #endif

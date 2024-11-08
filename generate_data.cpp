@@ -4,6 +4,7 @@
 #include <chrono>
 #include <cmath>
 #include <iomanip>
+#include <list>
 #include "Student.h"
 #include "helper.h"
 #include "generate_data.h"
@@ -26,19 +27,17 @@ Student GenerateStudent(int n, int n_grades) {
     return s;
 }
 
-std::vector<Student> CreateStudentList(int n, int n_grades) {
-    std::vector<Student> students;
+template <typename T> void CreateStudentList(T &students, int n, int n_grades) {
     Student s;
     for (int i = 1; i <= n; i++) {
         s = GenerateStudent(i, n_grades);
         students.push_back(s);
     }
-    return students;
 }
 
-std::string CreateSingleLine(std::vector<Student> students) {
+template <typename T> std::string CreateSingleLine(T students) {
     int n;
-    n = students[0].grades.size();
+    n = students.front().grades.size();
 
     std::string line = PadTo("Name", 25) + PadTo("Last name", 25);
 
@@ -60,10 +59,10 @@ std::string CreateSingleLine(std::vector<Student> students) {
     return line;
 }
 
-void GenerateData() {
-    std::vector<Student> studentai;
+template <typename T> void GenerateData(T &students) {
     std::ofstream file;
     std::string single_line, path = "generated_data";
+
     int n, n_grades = 15;
     auto start = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff;
@@ -73,12 +72,12 @@ void GenerateData() {
         file.open("generated_data/studentai" + std::to_string(n) + ".txt");
 
         start = std::chrono::high_resolution_clock::now();
-        studentai = CreateStudentList(n, n_grades);
+        CreateStudentList(students, n, n_grades);
         diff = std::chrono::high_resolution_clock::now() - start;
         std::cout << std::fixed << n << " studentu duomenu sugeneravimas uztruko: " << diff.count() << " s\n";
 
         start = std::chrono::high_resolution_clock::now();
-        single_line = CreateSingleLine(studentai);
+        single_line = CreateSingleLine(students);
         diff = std::chrono::high_resolution_clock::now() - start;
         std::cout << std::fixed << n << " studentu duomenu sudejimas i viena eilute uztruko: " << diff.count() << " s\n";
 
@@ -88,5 +87,33 @@ void GenerateData() {
         std::cout << std::fixed << n << " studentu duomenu irasymas i faila uztruko: " << diff.count() << " s\n\n\n";
 
         file.close();
+
+        students = T{};
+    }
+}
+
+void GenerateDataListOrVector() {
+    char choice;
+    bool cont = true;
+    while (cont) {
+        std::cout << "Please choose: \n(l) - list\n(v) - vector" << std::endl; 
+        std::cout << "Enter: ";
+        std::cin >> choice;
+
+        if (choice == 'l') {
+            std::list<Student> students;
+            GenerateData(students);
+            break;
+        }
+        else if (choice == 'v'){
+            std::vector<Student> students;
+            GenerateData(students);
+            break;
+        }
+        else {
+            std::cout << "Choice does not exist.";
+        }
+
+        std::cout << "\n\n";   
     }
 }
