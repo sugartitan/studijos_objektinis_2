@@ -12,8 +12,8 @@ template <typename T> void CreateStudentList(T &students, int n, int n_grades);
 
 template <typename T> std::string CreateSingleLine(T students);
 
-template <typename T> void GenerateData(T &students);
+template <typename T> std::vector<std::vector<double>> GenerateData(T &students);
 
-void GenerateData();
+std::vector<std::vector<double>> GenerateData();
 
 #endif

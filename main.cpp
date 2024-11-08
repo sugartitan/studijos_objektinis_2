@@ -7,6 +7,8 @@
 int main() {
     char choice;
     bool cont = true;
+    std::string file_path;
+    std::vector<std::vector<double>> data;
 
     while (cont) {
         std::cout << "Please choose: \n(g) - data generation\n(d) - data input\n(t) - test speed\n(e) - end program" << std::endl; 
@@ -18,10 +20,16 @@ int main() {
                 DataInput();
                 break;
             case 'g':
-                GenerateData();
+                data = GenerateData();
+                std::cout << "Save timing data to: ";
+                std::cin >> file_path;
+                SaveCsv(data, file_path);
                 break;
             case 't':
-                TestSpeed();
+                data = TestSpeed();
+                std::cout << "Save data to: ";
+                std::cin >> file_path;
+                SaveCsv(data, file_path);
                 break;
             case 'e':
                 cont = false;

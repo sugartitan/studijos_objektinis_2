@@ -10,7 +10,9 @@
 #include "test_speed.h"
 #include "data_input.h"
 
-template <typename T> void TestSpeed(T &students, bool split) {
+template <typename T> std::vector<std::vector<double>> TestSpeed(T &students, bool split) {
+    std::vector<std::vector<double>> data;
+    std::vector<double> line;
     T poor, smart;
     std::string single_line, file_path;
     int n, n_grades = 15;
@@ -20,6 +22,7 @@ template <typename T> void TestSpeed(T &students, bool split) {
     std::chrono::duration<double> diff;
 
     for (int i = 3; i <= 7; i++) {
+        line.push_back(i - 3);
         n = std::pow(10, i);
         file_path = "generated_data/studentai" + std::to_string(n) + ".txt";
 
@@ -29,11 +32,13 @@ template <typename T> void TestSpeed(T &students, bool split) {
         ReadDataFromFile(students, file_path);
         diff = std::chrono::high_resolution_clock::now() - start;
         std::cout << std::fixed << n << " studentu duomenu nuskaitymas is failo uztruko: " << diff.count() << " s\n";
+        line.push_back(diff.count());
 
         start = std::chrono::high_resolution_clock::now();
         Sort(students);
         diff = std::chrono::high_resolution_clock::now() - start;
         std::cout << std::fixed << n << " studentu duomenu surusiavimas didejant naudojant sort: " << diff.count() << " s\n";
+        line.push_back(diff.count());
 
         start = std::chrono::high_resolution_clock::now();
         if (split) {
@@ -43,11 +48,13 @@ template <typename T> void TestSpeed(T &students, bool split) {
         }
         diff = std::chrono::high_resolution_clock::now() - start;
         std::cout << std::fixed << n << " studentu duomenu dalijimas i dvi grupes uztruko: " << diff.count() << " s\n";
+        line.push_back(diff.count());
 
         start = std::chrono::high_resolution_clock::now();
         WriteStudentsResultsToFile(poor, "output/" + std::to_string(n) + "_vargsiuku_rezultatai.txt");
         diff = std::chrono::high_resolution_clock::now() - start;
         std::cout << std::fixed << n << " vargsiuku studentu surasymas i faila uztruko: " << diff.count() << " s\n";
+        line.push_back(diff.count());
 
         start = std::chrono::high_resolution_clock::now();
         if (split) {
@@ -57,17 +64,25 @@ template <typename T> void TestSpeed(T &students, bool split) {
         }
         diff = std::chrono::high_resolution_clock::now() - start;
         std::cout << std::fixed << n << " kietuoliu studentu surasymas i faila uztruko: " << diff.count() << " s\n";
+        line.push_back(diff.count());
 
         diff = std::chrono::high_resolution_clock::now() - st;
         std::cout << std::fixed << n << " studentu testas truko: " << diff.count() << " s\n\n\n";
+        line.push_back(diff.count());
+
+        data.push_back(line);
 
         students = T{};
         smart = T{};
         poor = T{};
+        line = std::vector<double>{};
     }
+    
+    return data;
 }
 
-void TestSpeed() {
+std::vector<std::vector<double>> TestSpeed() {
+    std::vector<std::vector<double>> data;
     char choice1, choice2;
     bool cont = true;
     while (cont) {
@@ -108,9 +123,11 @@ void TestSpeed() {
 
     if (choice1 == 'l') {
         std::list<Student> students;
-        TestSpeed(students, choice2 == '1');
+        data = TestSpeed(students, choice2 == '1');
     } else {
         std::vector<Student> students;
-        TestSpeed(students, choice2 == '1');
+        data = TestSpeed(students, choice2 == '1');
     }
+    
+    return data;
 }

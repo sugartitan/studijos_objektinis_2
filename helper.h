@@ -77,4 +77,6 @@ void Sort(std::vector<Student> &students);
 
 void Sort(std::list<Student> &students);
 
+void SaveCsv(std::vector<std::vector<double>> data, std::string file_path);
+
 #endif

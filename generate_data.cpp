@@ -59,7 +59,9 @@ template <typename T> std::string CreateSingleLine(T students) {
     return line;
 }
 
-template <typename T> void GenerateData(T &students) {
+template <typename T> std::vector<std::vector<double>> GenerateData(T &students) {
+    std::vector<std::vector<double>> data;
+    std::vector<double> line;
     std::ofstream file;
     std::string single_line, path = "generated_data";
 
@@ -68,6 +70,7 @@ template <typename T> void GenerateData(T &students) {
     std::chrono::duration<double> diff;
 
     for (int i = 3; i <= 7; i++) {
+        line.push_back(i - 3);
         n = std::pow(10, i);
         file.open("generated_data/students" + std::to_string(n) + ".txt");
 
@@ -75,24 +78,33 @@ template <typename T> void GenerateData(T &students) {
         CreateStudentList(students, n, n_grades);
         diff = std::chrono::high_resolution_clock::now() - start;
         std::cout << std::fixed << n << " studentu duomenu sugeneravimas uztruko: " << diff.count() << " s\n";
+        line.push_back(diff.count());
 
         start = std::chrono::high_resolution_clock::now();
         single_line = CreateSingleLine(students);
         diff = std::chrono::high_resolution_clock::now() - start;
         std::cout << std::fixed << n << " studentu duomenu sudejimas i viena eilute uztruko: " << diff.count() << " s\n";
+        line.push_back(diff.count());
 
         start = std::chrono::high_resolution_clock::now();
         file << single_line;
         diff = std::chrono::high_resolution_clock::now() - start;
         std::cout << std::fixed << n << " studentu duomenu irasymas i faila uztruko: " << diff.count() << " s\n\n\n";
+        line.push_back(diff.count());
+
+        data.push_back(line);
 
         file.close();
 
         students = T{};
+        line = std::vector<double>{};
     }
+
+    return data;
 }
 
-void GenerateData() {
+std::vector<std::vector<double>> GenerateData() {
+    std::vector<std::vector<double>> data;
     char choice;
     bool cont = true;
     while (cont) {
@@ -102,12 +114,12 @@ void GenerateData() {
 
         if (choice == 'l') {
             std::list<Student> students;
-            GenerateData(students);
+            data = GenerateData(students);
             break;
         }
         else if (choice == 'v'){
             std::vector<Student> students;
-            GenerateData(students);
+            data = GenerateData(students);
             break;
         }
         else {
@@ -116,4 +128,6 @@ void GenerateData() {
 
         std::cout << "\n\n";   
     }
+
+    return data;
 }

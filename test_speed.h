@@ -1,8 +1,8 @@
 #ifndef TESTSPEED_H
 #define TESTSPEED_H
 
-template <typename T> void TestSpeed(T &students, bool split = true);
+template <typename T> std::vector<std::vector<double>> TestSpeed(T &students, bool split = true);
 
-void TestSpeed();
+std::vector<std::vector<double>> TestSpeed();
 
 #endif

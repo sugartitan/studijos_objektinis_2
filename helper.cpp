@@ -102,3 +102,20 @@ void Sort(std::vector<Student> &students) {
 void Sort(std::list<Student> &students) {
     students.sort(CompareStudents);
 }
+
+void SaveCsv(std::vector<std::vector<double>> data, std::string file_path) {
+    std::ofstream file;
+    file.open(file_path);
+    std::string text = "";
+
+    for (int i = 0; i < data.size(); i++) {
+        text += std::to_string(i);
+        for (int j = 0; j < data[i].size(); j++) {
+            text += ',' + std::to_string(data[i][j]);
+        }
+        text += '\n';
+    }
+
+    file << text;
+    file.close();
+}
