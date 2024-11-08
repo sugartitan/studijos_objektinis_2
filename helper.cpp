@@ -15,7 +15,7 @@
 bool CompareStudents(Student s1, Student s2) {
     if (s1.name == s2.name){
         if (s1.last_name == s2.last_name) {
-            return Mean(s1.grades) < Mean(s2.grades);
+            return Mean(s1) < Mean(s2);
         }
         return s1.last_name < s2.last_name;
     }
@@ -30,18 +30,19 @@ int CountWords(std::string str) {
     return count;
 }
 
-double Mean(std::vector<int> grades) {
-    double sum = 0;
-    for (int grade : grades) {
+double Mean(Student s) {
+    double sum = s.exam_grade;
+    for (int grade : s.grades) {
         sum += grade;
     }
 
-    return sum / grades.size();
+    return sum / (s.grades.size() + 1);
 }
 
-double Median(std::vector<int> grades) {
-    std::vector<int> v_sorted(grades.size());
-    std::partial_sort_copy(begin(grades), end(grades), begin(v_sorted), end(v_sorted));
+double Median(Student s) {
+    std::vector<int> v_sorted(s.grades);
+    v_sorted.push_back(s.exam_grade);
+    std::sort(v_sorted.begin(), v_sorted.end());;
 
     if (v_sorted.size() % 2 == 0) {
         return (v_sorted[v_sorted.size() / 2] + v_sorted[v_sorted.size() / 2 - 1]) / 2;

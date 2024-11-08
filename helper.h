@@ -14,9 +14,9 @@ bool CompareStudents(Student s1, Student s2);
 
 int CountWords(std::string str);
 
-double Mean(std::vector<int> grades);
+double Mean(Student s);
 
-double Median(std::vector<int> grades);
+double Median(Student s);
 
 std::string ConvertDoubleToString(double d);
 
@@ -32,7 +32,7 @@ template <typename T> std::tuple<T, T> SplitStudents(T students) {
     T poor, smart;
 
     for (Student s : students) {
-        if (Mean(s.grades) < 5) poor.push_back(s);
+        if (Mean(s) < 5) poor.push_back(s);
         else smart.push_back(s);
     }
 
@@ -43,13 +43,13 @@ template <typename T> T SplitStudentsKeep(T &students) {
     T poor;
     
     for (Student s : students) {
-        if (Mean(s.grades) < 5) {
+        if (Mean(s) < 5) {
             poor.push_back(s);
         }
     }
 
     students.erase(
-        std::remove_if(students.begin(), students.end(), [](Student s) { return Mean(s.grades) < 5; }),
+        std::remove_if(students.begin(), students.end(), [](Student s) { return Mean(s) < 5; }),
         students.end());
 
     return poor;
@@ -60,8 +60,8 @@ template <typename T> std::string MakeSingleLine(T students) {
     std::string line = PadTo("Name", 20) + PadTo("Last name", 20) + PadTo("Final grade (mean)", 20, true) + PadTo("Final grade (median)", 25, true);
     line += '\n' + std::string(85, '-') + '\n';
     for (Student s : students) {
-        mean = Mean(s.grades);
-        median = Median(s.grades);
+        mean = Mean(s);
+        median = Median(s);
         line += PadTo(s.name, 20) + PadTo(s.last_name, 20) + PadTo(ConvertDoubleToString(mean), 20, true) + PadTo(ConvertDoubleToString(median), 25, true) + '\n';
     }
     return line;
