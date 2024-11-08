@@ -2,7 +2,7 @@
 
 A program to ease the input of students grades through console or reading from a file.
 
-# V0.3
+# V1.0
 
 Test parameters:
 
@@ -10,14 +10,17 @@ Test parameters:
 **RAM** - CL16, 4x8GB, DDR4, 3200 MHz
 **SSD** - SPCC M.2 PCIe SSD
 
-Data Generation times using Vectors:
-![alt text](images/dgv.png)
+Data Generation times:
+![alt text](images/data_generation.png)
 
-Data Generation times using Lists:
-![alt text](images/dgl.png)
+Data reading and calculation times using List and keeping original container:
+![alt text](images/test_list_keep.png)
 
-Data Reading times using Vectors:
-![alt text](images/drv.png)
+Data reading and calculation times using List and splitting into two containers:
+![alt text](images/test_list_split.png)
 
-Data Reading times using Lists:
-![alt text](images/drl.png)
+Data reading and calculation times using Vector and keeping original container:
+![alt text](images/test_vector_keep.png)
+
+Data reading and calculation times using Vector and splitting into two containers:
+![alt text](images/test_vector_split.png)
