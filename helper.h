@@ -5,6 +5,9 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <fstream>
+#include <list>
+#include <tuple>
 #include "Student.h"
 
 bool CompareStudents(Student s1, Student s2);
@@ -25,14 +28,53 @@ void GenerateRandomGrades(Student& s, int n);
 
 void ReadInt(int& n, std::string header);
 
-void ReadDataFromConsole(std::vector<Student>& students);
+template <typename T> std::tuple<T, T> SplitStudents(T students) {
+    T poor, smart;
 
-void ReadDataFromFile(std::vector<Student>& students, std::string filePath);
+    for (Student s : students) {
+        if (Mean(s.grades) < 5) poor.push_back(s);
+        else smart.push_back(s);
+    }
 
-std::tuple<std::vector<Student>, std::vector<Student>> SplitStudents(std::vector<Student> students);
+    return std::make_tuple(poor, smart);
+}
 
-std::string MakeSingleLine(std::vector<Student> students);
+template <typename T> T SplitStudentsKeep(T &students) {
+    T poor;
+    
+    for (Student s : students) {
+        if (Mean(s.grades) < 5) {
+            poor.push_back(s);
+        }
+    }
 
-void WriteStudentsResultsToFile(std::vector<Student> students, std::string file_path);
+    students.erase(
+        std::remove_if(students.begin(), students.end(), [](Student s) { return Mean(s.grades) < 5; }),
+        students.end());
+
+    return poor;
+}
+
+template <typename T> std::string MakeSingleLine(T students) {
+    double mean, median;
+    std::string line = PadTo("Name", 20) + PadTo("Last name", 20) + PadTo("Final grade (mean)", 20, true) + PadTo("Final grade (median)", 25, true);
+    line += '\n' + std::string(85, '-') + '\n';
+    for (Student s : students) {
+        mean = Mean(s.grades);
+        median = Median(s.grades);
+        line += PadTo(s.name, 20) + PadTo(s.last_name, 20) + PadTo(ConvertDoubleToString(mean), 20, true) + PadTo(ConvertDoubleToString(median), 25, true) + '\n';
+    }
+    return line;
+}
+
+template <typename T> void WriteStudentsResultsToFile(T students, std::string file_path) {
+    std::ofstream file(file_path);
+    file << MakeSingleLine(students);
+    file.close();
+}
+
+void Sort(std::vector<Student> &students);
+
+void Sort(std::list<Student> &students);
 
 #endif

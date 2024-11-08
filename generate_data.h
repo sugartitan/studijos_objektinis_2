@@ -14,6 +14,6 @@ template <typename T> std::string CreateSingleLine(T students);
 
 template <typename T> void GenerateData(T &students);
 
-void GenerateDataListOrVector();
+void GenerateData();
 
 #endif

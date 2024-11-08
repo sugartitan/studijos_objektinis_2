@@ -69,7 +69,7 @@ template <typename T> void GenerateData(T &students) {
 
     for (int i = 3; i <= 7; i++) {
         n = std::pow(10, i);
-        file.open("generated_data/studentai" + std::to_string(n) + ".txt");
+        file.open("generated_data/students" + std::to_string(n) + ".txt");
 
         start = std::chrono::high_resolution_clock::now();
         CreateStudentList(students, n, n_grades);
@@ -92,7 +92,7 @@ template <typename T> void GenerateData(T &students) {
     }
 }
 
-void GenerateDataListOrVector() {
+void GenerateData() {
     char choice;
     bool cont = true;
     while (cont) {

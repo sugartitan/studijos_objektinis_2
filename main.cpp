@@ -18,7 +18,7 @@ int main() {
                 DataInput();
                 break;
             case 'g':
-                GenerateDataListOrVector();
+                GenerateData();
                 break;
             case 't':
                 TestSpeed();

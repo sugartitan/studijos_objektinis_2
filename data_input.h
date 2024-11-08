@@ -1,9 +1,11 @@
 #ifndef DATAINPUT_H
 #define DATAINPUT_H
 
-void ReadDataFromConsole(std::vector<Student>& students);
+template <typename T> void ReadDataFromConsole(T &students);
 
-void ReadDataFromFile(std::vector<Student>& students, std::string filePath);
+template <typename T> void ReadDataFromFile(T &students, std::string filePath);
+
+template <typename T> void DataInput(T &students, bool split = true);
 
 void DataInput();
 
