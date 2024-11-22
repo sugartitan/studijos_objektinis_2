@@ -9,21 +9,12 @@
 #include "helper.h"
 #include "generate_data.h"
 
-std::vector<int> GenerateRandomGrades(int n) {
-    std::vector<int> grades;
-    for (int i = 0; i < n; i++) {
-        grades.push_back(GetRandomGrade());
-    }
-
-    return grades;
-}
-
 Student GenerateStudent(int n, int n_grades) {
-    Student s;
-    s.name = "Vardas" + std::to_string(n);
-    s.last_name = "Pavarde" + std::to_string(n);
-    s.grades = GenerateRandomGrades(n_grades);
-    s.exam_grade = GetRandomGrade();
+    std::string name = "Vardas" + std::to_string(n);
+    std::string last_name = "Pavarde" + std::to_string(n);
+    std::vector<int> grades = GenerateRandomGrades(n_grades);
+    int exam_grade = GetRandomGrade();
+    Student s = Student(name, last_name, grades, exam_grade);
     return s;
 }
 
