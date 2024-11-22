@@ -24,7 +24,7 @@ std::string PadTo(std::string str, size_t num, bool pad_right = false, char padd
 
 int GetRandomGrade();
 
-void GenerateRandomGrades(Student& s, int n);
+std::vector<int> GenerateRandomGrades(int n);
 
 void ReadInt(int& n, std::string header);
 
@@ -62,7 +62,7 @@ template <typename T> std::string MakeSingleLine(T students) {
     for (Student s : students) {
         mean = Mean(s);
         median = Median(s);
-        line += PadTo(s.name, 20) + PadTo(s.last_name, 20) + PadTo(ConvertDoubleToString(mean), 20, true) + PadTo(ConvertDoubleToString(median), 25, true) + '\n';
+        line += PadTo(s.name(), 20) + PadTo(s.lastName(), 20) + PadTo(ConvertDoubleToString(mean), 20, true) + PadTo(ConvertDoubleToString(median), 25, true) + '\n';
     }
     return line;
 }
