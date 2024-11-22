@@ -9,8 +9,6 @@
 #include <list>
 #include "Student.h"
 
-std::vector<int> GenerateRandomGrades(int n);
-
 Student GenerateStudent(int n, int n_grades);
 
 template <typename T> void CreateStudentList(T &students, int n, int n_grades) {
@@ -23,7 +21,7 @@ template <typename T> void CreateStudentList(T &students, int n, int n_grades) {
 
 template <typename T> std::string CreateSingleLine(T students) {
     int n;
-    n = students.front().grades.size();
+    n = students.front().getGrades().size();
 
     std::string line = PadTo("Name", 25) + PadTo("Last name", 25);
 
@@ -36,11 +34,11 @@ template <typename T> std::string CreateSingleLine(T students) {
     line += '\n' + std::string(10 * (n + 6), '-') + '\n';
 
     for (Student s : students) {
-        line += PadTo(s.name, 25) + PadTo(s.last_name, 25);
-        for (int g : s.grades) {
+        line += PadTo(s.name(), 25) + PadTo(s.lastName(), 25);
+        for (int g : s.getGrades()) {
             line += PadTo(std::to_string(g), 10, true);
         }
-        line += PadTo(std::to_string(s.exam_grade), 10, true) + '\n';
+        line += PadTo(std::to_string(s.getExam()), 10, true) + '\n';
     }
     return line;
 }
