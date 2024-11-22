@@ -113,3 +113,22 @@ Data reading and calculation times using Vector and keeping original container:
 Data reading and calculation times using Vector and splitting into two containers:
 
 ![alt text](images/test_vector_split.png)
+
+# V1.1
+
+Improved:
+* Made struct Student into a class;
+* Code style.
+
+Fixed:
+* Bug with reading too much data;
+
+### Tests:
+
+Speed differences in Inputing Data using struct or class:
+
+![alt text](images/struct_v_class.png)
+
+Optimization test:
+
+![alt text](images/opti.png)
