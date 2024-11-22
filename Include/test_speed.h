@@ -20,7 +20,7 @@ template <typename T> std::vector<std::vector<double>> TestSpeed(T &students, bo
 
     for (int i = 3; i <= 7; i++) {
         n = std::pow(10, i);
-        file_path = "generated_data/studentai" + std::to_string(n) + ".txt";
+        file_path = "generated_data/students" + std::to_string(n) + ".txt";
 
         st = std::chrono::high_resolution_clock::now();
 
@@ -42,6 +42,7 @@ template <typename T> std::vector<std::vector<double>> TestSpeed(T &students, bo
         } else {
             poor = SplitStudentsKeep(students);
         }
+
         diff = std::chrono::high_resolution_clock::now() - start;
         std::cout << std::fixed << n << " studentu duomenu dalijimas i dvi grupes uztruko: " << diff.count() << " s\n";
         line.push_back(diff.count());
@@ -68,10 +69,10 @@ template <typename T> std::vector<std::vector<double>> TestSpeed(T &students, bo
 
         data.push_back(line);
 
-        students = T{};
-        smart = T{};
-        poor = T{};
-        line = std::vector<double>{};
+        students = T();
+        smart = T();
+        poor = T();
+        line = std::vector<double>();
     }
     
     return data;
