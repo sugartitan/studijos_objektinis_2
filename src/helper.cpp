@@ -13,13 +13,13 @@
 #include "helper.h"
 
 bool CompareStudents(Student s1, Student s2) {
-    if (s1.name == s2.name){
-        if (s1.last_name == s2.last_name) {
+    if (s1.name() == s2.name()){
+        if (s1.lastName() == s2.lastName()) {
             return Mean(s1) < Mean(s2);
         }
-        return s1.last_name < s2.last_name;
+        return s1.lastName() < s2.lastName();
     }
-    return s1.name < s2.name;
+    return s1.name() < s2.name();
 }
 
 int CountWords(std::string str) {
@@ -31,17 +31,17 @@ int CountWords(std::string str) {
 }
 
 double Mean(Student s) {
-    double sum = s.exam_grade;
-    for (int grade : s.grades) {
+    double sum = s.getExam();
+    for (int grade : s.getGrades()) {
         sum += grade;
     }
 
-    return sum / (s.grades.size() + 1);
+    return sum / (s.getGrades().size() + 1);
 }
 
 double Median(Student s) {
-    std::vector<int> v_sorted(s.grades);
-    v_sorted.push_back(s.exam_grade);
+    std::vector<int> v_sorted(s.getGrades());
+    v_sorted.push_back(s.getExam());
     std::sort(v_sorted.begin(), v_sorted.end());;
 
     if (v_sorted.size() % 2 == 0) {
@@ -75,10 +75,13 @@ int GetRandomGrade() {
     return std::rand() % 10 + 1;
 }
 
-void GenerateRandomGrades(Student& s, int n) {
+std::vector<int> GenerateRandomGrades(int n) {
+    std::vector<int> grades;
     for (int i = 0; i < n; i++) {
-        s.grades.push_back(GetRandomGrade());
+        grades.push_back(GetRandomGrade());
     }
+
+    return grades;
 }
 
 void ReadInt(int& n, std::string header) {
