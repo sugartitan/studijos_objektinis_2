@@ -3,6 +3,7 @@
 #include "Exceptions.h"
 
 template <typename T> void ReadDataFromConsole(T &students) {
+    std::vector<int> grades;
     std::string name, last_name, str;
     int index = 1, grade, exam_grade, n_grades;
     char add_another, at_random;
@@ -10,9 +11,9 @@ template <typename T> void ReadDataFromConsole(T &students) {
     while (true) {
         Student s;
         std::cout << "Enter student's Name: ";
-        std::cin >> s.name;
+        std::cin >> name;
         std::cout << "Last name: ";
-        std::cin >> s.last_name;
+        std::cin >> last_name;
 
         std::cout << "\nDo you want to generate student's grades at random? (y/n): ";
         std::cin >> at_random;
@@ -25,17 +26,20 @@ template <typename T> void ReadDataFromConsole(T &students) {
             while (getline(std::cin, str) and !str.empty()) {
                 std::stringstream ss(str);
                 while (ss >> grade)
-                    s.grades.push_back(grade);
+                    grades.push_back(grade);
             }
 
-            ReadInt(s.exam_grade, "Enter student's egzam grade: ");
+            ReadInt(exam_grade, "Enter student's egzam grade: ");
         }
         else {
             ReadInt(n_grades, "Enter a number of homework grades to generate: ");
-            GenerateRandomGrades(s, n_grades);
+            grades = GenerateRandomGrades(n_grades);
         }
 
+        s = Student(name, last_name, grades, exam_grade);
         students.push_back(s);
+
+        grades = std::vector<int>{};
 
         std::cout << "\nDo you wish to add another student? (y/n): ";
         std::cin >> add_another;
@@ -50,8 +54,9 @@ template <typename T> void ReadDataFromConsole(T &students) {
 
 template <typename T> void ReadDataFromFile(T &students, std::string filePath) {
     std::ifstream file(filePath);
-    std::string my_string, token;
-    int pos = 0, grade;
+    std::string my_string, token, name, last_name;
+    std::vector<int> grades;
+    int pos = 0, grade, exam_grade;
 
     if (!file) {
         throw FileNotFound();
@@ -65,14 +70,18 @@ template <typename T> void ReadDataFromFile(T &students, std::string filePath) {
         while (getline(file, my_string)) {
             std::stringstream ss(my_string);
             Student student;
-            ss >> student.name >> student.last_name;
-            for (int i = 0; i < count - 3; i++) {
+            ss >> name >> last_name;
+            for (int i = 0; i < count - 4; ++i) {
                 ss >> grade;
-                student.grades.push_back(grade);
+                grades.push_back(grade);
             }
-            ss >> student.exam_grade;
+            ss >> exam_grade;
+
+            student = Student(name, last_name, grades, exam_grade);
 
             students.push_back(student);
+
+            grades = std::vector<int>();
         }
     }
 
@@ -123,7 +132,7 @@ template <typename T> void DataInput(T &students, bool split) {
         tie(poor_students, smart_students) = SplitStudents(students);
         WriteStudentsResultsToFile(smart_students, smart_output_file_path);
     } else {
-        poor_students = SplitStudentsKeep(students);
+        tie(poor_students, students) = SplitStudents(students);
         WriteStudentsResultsToFile(students, smart_output_file_path);
     }
     
