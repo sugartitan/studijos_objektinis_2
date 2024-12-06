@@ -132,3 +132,8 @@ Speed differences in Inputing Data using struct or class:
 Optimization test:
 
 ![alt text](images/opti.png)
+
+# V1.2
+
+Improved:
+* Added rule of three
