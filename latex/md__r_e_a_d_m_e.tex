@@ -1,0 +1,140 @@
+\chapter{studijos-\/objektinis}
+\hypertarget{md__r_e_a_d_m_e}{}\label{md__r_e_a_d_m_e}\index{studijos-\/objektinis@{studijos-\/objektinis}}
+\label{md__r_e_a_d_m_e_autotoc_md0}%
+\Hypertarget{md__r_e_a_d_m_e_autotoc_md0}%
+
+
+A program to ease the input of students grades through console or reading from a file.\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysection{\texorpdfstring{Download}{Download}}\label{md__r_e_a_d_m_e_autotoc_md1}
+
+\begin{DoxyEnumerate}
+\item Download as ZIP and extract.
+\item Open console and in the extracted folder (where \textquotesingle{}CMake\+Lists.\+txt\textquotesingle{} file exists) run\+:
+
+{\ttfamily cmake -\/G "{}\+Min\+GW Makefile"{} .}
+\item Run these commands\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake\ -\/-\/install\ .}
+\DoxyCodeLine{cmake\ -\/-\/build\ .}
+
+\end{DoxyCode}
+
+\item Run {\ttfamily Student\+\_\+\+Management\+\_\+\+System.\+exe} and Done!
+\end{DoxyEnumerate}\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{\texorpdfstring{Usage}{Usage}}\label{md__r_e_a_d_m_e_autotoc_md2}
+This is a Console Program without UI.
+
+The messages inside are straightforward.
+
+If you get message {\ttfamily Choice does not exist.} please check for available inputs in the console above.\hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysection{\texorpdfstring{V0.\+1}{V0.\+1}}\label{md__r_e_a_d_m_e_autotoc_md3}
+Created functionality\+:
+\begin{DoxyItemize}
+\item Student data structure to save Student\textquotesingle{}s name, last name, grades and exam grade;
+\item Input data by hand;
+\item Calculating final score by Median or Mean;
+\item Sorting by Students names, last names and final grades;
+\item Ability to generate random Student grades.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysection{\texorpdfstring{V0.\+1.\+1}{V0.\+1.\+1}}\label{md__r_e_a_d_m_e_autotoc_md4}
+Improved\+:
+\begin{DoxyItemize}
+\item Data output to file instead of Console.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md5}{}\doxysection{\texorpdfstring{V0.\+2}{V0.\+2}}\label{md__r_e_a_d_m_e_autotoc_md5}
+Added\+:
+\begin{DoxyItemize}
+\item Data generation to files.
+\end{DoxyItemize}
+
+Improved\+:
+\begin{DoxyItemize}
+\item Reworked structure, made use of interfaces.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysection{\texorpdfstring{V0.\+3}{V0.\+3}}\label{md__r_e_a_d_m_e_autotoc_md6}
+Improved\+:
+\begin{DoxyItemize}
+\item Cleaned code;
+\item Did some speed tests.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md7}{}\doxysubsubsection{\texorpdfstring{Tests\+:}{Tests\+:}}\label{md__r_e_a_d_m_e_autotoc_md7}
+Test parameters\+:
+
+
+\begin{DoxyItemize}
+\item {\bfseries{CPU}} -\/ 6C/12T 3.\+7-\/4.\+6\+GHz
+\item {\bfseries{RAM}} -\/ CL16, 4x8\+GB, DDR4, 3200 MHz
+\item {\bfseries{SSD}} -\/ SPCC M.\+2 PCIe SSD
+\end{DoxyItemize}
+
+Data Generation times using Vectors\+: 
+
+Data Generation times using Lists\+: 
+
+Data Reading times using Vectors\+: 
+
+Data Reading times using Lists\+: \hypertarget{md__r_e_a_d_m_e_autotoc_md8}{}\doxysection{\texorpdfstring{V1.\+0}{V1.\+0}}\label{md__r_e_a_d_m_e_autotoc_md8}
+Added\+:
+\begin{DoxyItemize}
+\item Ability to chose List or Vector in Console;
+\item Saving test/generation time data to csv.
+\end{DoxyItemize}
+
+Improved\+:
+\begin{DoxyItemize}
+\item Cleaned code.
+\end{DoxyItemize}
+
+Fixed\+:
+\begin{DoxyItemize}
+\item Mean or Median not including exam grade.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md9}{}\doxysubsubsection{\texorpdfstring{Tests\+:}{Tests\+:}}\label{md__r_e_a_d_m_e_autotoc_md9}
+Test parameters\+:
+
+
+\begin{DoxyItemize}
+\item {\bfseries{CPU}} -\/ 6C/12T 3.\+7-\/4.\+6\+GHz
+\item {\bfseries{RAM}} -\/ CL16, 4x8\+GB, DDR4, 3200 MHz
+\item {\bfseries{SSD}} -\/ SPCC M.\+2 PCIe SSD
+\end{DoxyItemize}
+
+Data Generation times\+:
+
+
+
+Data reading and calculation times using List and keeping original container\+:
+
+
+
+Data reading and calculation times using List and splitting into two containers\+:
+
+
+
+Data reading and calculation times using Vector and keeping original container\+:
+
+
+
+Data reading and calculation times using Vector and splitting into two containers\+:
+
+\hypertarget{md__r_e_a_d_m_e_autotoc_md10}{}\doxysection{\texorpdfstring{V1.\+1}{V1.\+1}}\label{md__r_e_a_d_m_e_autotoc_md10}
+Improved\+:
+\begin{DoxyItemize}
+\item Made struct Student into a class;
+\item Code style.
+\end{DoxyItemize}
+
+Fixed\+:
+\begin{DoxyItemize}
+\item Bug with reading too much data;
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md11}{}\doxysubsubsection{\texorpdfstring{Tests\+:}{Tests\+:}}\label{md__r_e_a_d_m_e_autotoc_md11}
+Speed differences in Inputing Data using struct or class\+:
+
+
+
+Optimization test\+:
+
+\hypertarget{md__r_e_a_d_m_e_autotoc_md12}{}\doxysection{\texorpdfstring{V1.\+2}{V1.\+2}}\label{md__r_e_a_d_m_e_autotoc_md12}
+Improved\+:
+\begin{DoxyItemize}
+\item Added rule of three.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md13}{}\doxysection{\texorpdfstring{V1.\+3}{V1.\+3}}\label{md__r_e_a_d_m_e_autotoc_md13}
+Improved\+:
+\begin{DoxyItemize}
+\item Added a virtual Human class;
+\item Made Student a derived class from Human. 
+\end{DoxyItemize}
