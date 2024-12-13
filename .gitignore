@@ -33,7 +33,6 @@
 
 main
 .vscode/
-test_data/
 output.txt
 poor.txt
 smart.txt
@@ -42,3 +41,5 @@ generate_data
 build
 
 gen.csv
+
+Doxyfile

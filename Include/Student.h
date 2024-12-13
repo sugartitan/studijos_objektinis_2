@@ -37,6 +37,7 @@ class Student : public Human{
         std::vector<int> getGrades() const { return grades_; }
         int getExam() const { return exam_grade_; }
         ~Student() {};
+        
 };
 
 #endif
