@@ -12,7 +12,7 @@ int main() {
     std::vector<std::vector<double>> data;
 
     while (cont) {
-        std::cout << "Please choose: \n(g) - data generation\n(d) - data input\n(t) - test speed\n(e) - end program" << std::endl; 
+        std::cout << "Please choose: \n(g) - data generation\n(d) - data input\n(t) - test speed\n(e) - end program\n(u) - run unit tests" << std::endl; 
         std::cout << "Enter: ";
         std::cin >> choice;
 
