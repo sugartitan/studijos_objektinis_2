@@ -2,8 +2,9 @@
 #define STUDENT_H
 #include <string>
 #include <vector>
+#include <Human.h>
 
-class Student {
+class Student : public Human{
     private:
         std::string name_;
         std::string last_name_;
@@ -11,9 +12,9 @@ class Student {
         int exam_grade_;
 
     public:
-        Student() : name_(""), last_name_(""), grades_(std::vector<int>{}), exam_grade_(0) { }
+        Student() : Human(), grades_(std::vector<int>{}), exam_grade_(0) { }
 
-        Student(std::string name, std::string last_name, std::vector<int> grades, int exam_grade) : name_(name), last_name_(last_name), grades_(grades), exam_grade_(exam_grade) { };
+        Student(std::string name, std::string last_name, std::vector<int> grades, int exam_grade) : Human(name, last_name), grades_(grades), exam_grade_(exam_grade) { };
 
         Student(const Student& other) : Student(other.name_, other.last_name_, other.grades_, other.exam_grade_) {}
  
