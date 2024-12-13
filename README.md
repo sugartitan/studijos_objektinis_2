@@ -136,4 +136,10 @@ Optimization test:
 # V1.2
 
 Improved:
-* Added rule of three
+* Added rule of three.
+
+# V1.3
+
+Improved:
+* Added a virtual Human class;
+* Made Student a derived class from Human.
