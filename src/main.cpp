@@ -3,6 +3,7 @@
 #include "data_input.h"
 #include "generate_data.h"
 #include "test_speed.h"
+#include "unit_tests.h"
 
 int main() {
     char choice;
@@ -33,6 +34,10 @@ int main() {
                 break;
             case 'e':
                 cont = false;
+                break;
+            case 'u':
+                UnitTests();
+                std::cout << "Tests are successful" << std::endl;
                 break;
             default:
                 std::cout << "Choice does not exist.";

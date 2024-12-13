@@ -33,7 +33,6 @@
 
 main
 .vscode/
-test_data/
 output.txt
 poor.txt
 smart.txt
