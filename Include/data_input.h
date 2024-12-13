@@ -1,6 +1,13 @@
 #ifndef DATAINPUT_H
 #define DATAINPUT_H
 #include "Exceptions.h"
+#include <vector>
+#include <string>
+#include "Student.h"
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include "helper.h"
 
 template <typename T> void ReadDataFromConsole(T &students) {
     std::vector<int> grades;
@@ -60,6 +67,7 @@ template <typename T> void ReadDataFromFile(T &students, std::string filePath) {
 
     if (!file) {
         throw FileNotFound();
+        return;
     }
     
     if (file.is_open()) {
