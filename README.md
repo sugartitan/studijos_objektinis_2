@@ -22,7 +22,7 @@ A program to ease the input of students grades through console or reading from a
 
 This is a Console Program without UI. 
 
-The messeges inside are straightforward.
+The messages inside are straightforward.
 
 If you get message `Choice does not exist.` please check for available inputs in the console above.
 
